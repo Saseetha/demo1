@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LoanPro - Prediction Result</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Advanced Design System */
+        :root {
+            /* Color Palette */
+            --color-primary: #4361ee;
+            --color-secondary: #3a0ca3;
+            --color-accent: #4cc9f0;
+            --color-success: #4ade80;
+            --color-danger: #ef4444;
+            --color-warning: #f59e0b;
+            --color-background: #f8fafc;
+            --color-text-primary: #1e293b;
+            --color-text-secondary: #64748b;
+            --color-card-bg: #ffffff;
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
+            --gradient-secondary: linear-gradient(135deg, #4cc9f0 0%, #4ade80 100%);
+            --gradient-cool: linear-gradient(135deg, #3a0ca3 0%, #4361ee 100%);
+
+            /* Shadows */
+            --shadow-subtle: 0 10px 25px rgba(67, 97, 238, 0.1);
+            --shadow-medium: 0 15px 35px rgba(67, 97, 238, 0.15);
+            --shadow-large: 0 25px 50px rgba(67, 97, 238, 0.2);
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+        }
+
+        /* Global Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        /* Reset and Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--color-background);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Prediction Container */
+        .prediction-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: var(--space-md);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            perspective: 1000px;
+        }
+
+        .prediction-card {
+            width: 100%;
+            max-width: 1100px;
+            background: var(--color-card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-large);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            animation: fadeInUp 0.8s ease-out;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        
+        .prediction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-large), 0 5px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        /* Image Section */
+        .prediction-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prediction-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        
+        .prediction-card:hover .prediction-image img {
+            transform: scale(1.05);
+        }
+
+        .prediction-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(67, 97, 238, 0.8),
+                rgba(76, 201, 240, 0.8)
+            );
+            opacity: 0.7;
+            z-index: 1;
+        }
+        
+        .prediction-brand {
+            position: absolute;
+            top: var(--space-md);
+            left: var(--space-md);
+            z-index: 2;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        .prediction-brand i {
+            font-size: 1.8rem;
+        }
+
+        /* Result Section */
+        .prediction-result {
+            padding: var(--space-xl);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .prediction-result::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .prediction-result h2 {
+            font-size: 2.2rem;
+            color: var(--color-primary);
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .prediction-result h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: a4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .prediction-description {
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-lg);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        
+        .prediction-description b {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .prediction-status {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+            padding: var(--space-md);
+            background: #f1f5f9;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-subtle);
+            animation: pulse 4s infinite;
+            transition: all 0.3s ease;
+        }
+        
+        .prediction-status:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.15);
+        }
+
+        .prediction-icon {
+            font-size: 3.2rem;
+            margin-right: var(--space-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .prediction-icon i.approved {
+            color: var(--color-success);
+            animation: float 3s infinite ease-in-out;
+        }
+        
+        .prediction-icon i.rejected {
+            color: var(--color-danger);
+            animation: pulse 2s infinite;
+        }
+        
+        .prediction-status-content h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: var(--space-xs);
+            color: var(--color-text-primary);
+        }
+        
+        .prediction-status-content p {
+            color: var(--color-text-secondary);
+        }
+        
+        .prediction-status.approved {
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.15) 0%, rgba(74, 222, 128, 0.05) 100%);
+            border-left: 4px solid var(--color-success);
+        }
+        
+        .prediction-status.rejected {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%);
+            border-left: 4px solid var(--color-danger);
+        }
+
+        .ai-analysis {
+            margin-top: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            background: #f8fafc;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-subtle);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .ai-analysis:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(67, 97, 238, 0.12);
+        }
+        
+        .ai-analysis::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-cool);
+        }
+
+        .ai-analysis h3 {
+            font-size: 1.4rem;
+            color: var(--color-primary);
+            margin-bottom: var(--space-sm);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .ai-analysis h3 i {
+            font-size: 1.2rem;
+            color: var(--color-accent);
+        }
+
+        .ai-analysis p {
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        
+        .ai-factors {
+            margin-top: var(--space-sm);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-sm);
+        }
+        
+        .ai-factor {
+            background: white;
+            padding: var(--space-sm);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .ai-factor i {
+            font-size: 1rem;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        .ai-factor-content {
+            flex: 1;
+        }
+        
+        .ai-factor-content h4 {
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+        
+        .ai-factor-content p {
+            font-size: 0.8rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+        
+        .ai-factor.positive i {
+            background: linear-gradient(135deg, var(--color-success) 0%, #34d399 100%);
+        }
+        
+        .ai-factor.negative i {
+            background: linear-gradient(135deg, var(--color-danger) 0%, #f87171 100%);
+        }
+        
+        .ai-factor.neutral i {
+            background: linear-gradient(135deg, var(--color-warning) 0%, #fbbf24 100%);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0.9rem 2rem;
+            margin-top: var(--space-lg);
+            background: var(--gradient-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.2);
+        }
+
+        .back-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(67, 97, 238, 0.3);
+        }
+        
+        .back-button i {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-button:hover i {
+            transform: translateX(-5px);
+        }
+        
+        .model-info {
+            margin-top: var(--space-md);
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .model-info i {
+            color: var(--color-primary);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .prediction-card {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+            
+            .prediction-image {
+                height: 200px;
+            }
+            
+            .ai-factors {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .prediction-result {
+                padding: var(--space-lg);
+            }
+            
+            .prediction-result h2 {
+                font-size: 1.8rem;
+            }
+            
+            .prediction-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="prediction-container">
+        <div class="prediction-card">
+            <div class="prediction-image">
+                <div class="prediction-brand">
+                    <i class="fas fa-chart-line"></i> LoanPro
+                </div>
+                <img src="https://i.gifer.com/7GiD.gif" alt="Loan Prediction">
+            </div>
+            <div class="prediction-result">
+                <div>
+                    <h2>Loan Prediction Result</h2>
+
+                    <div class="prediction-description">
+                        <p>Our advanced <b>XGBoost</b> machine learning model has analyzed your application and provided a prediction with <b>83% accuracy</b>. The model was trained on comprehensive historical lending data to ensure reliable results for your application.</p>
+                    </div>
+
+                    <div class="prediction-status {% if prediction == 'Approved' %}approved{% else %}rejected{% endif %}">
+                        <div class="prediction-icon">
+                            {% if prediction == 'Approved' %}
+                                <i class="fas fa-check-circle approved"></i>
+                            {% else %}
+                                <i class="fas fa-times-circle rejected"></i>
+                            {% endif %}
+                        </div>
+                        <div class="prediction-status-content">
+                            <h3>{{ prediction }}</h3>
+                            {% if prediction == 'Approved' %}
+                                <p>Congratulations! Based on our analysis, your loan application has been approved.</p>
+                            {% else %}
+                                <p>We're sorry, but your loan application has not been approved at this time.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="ai-analysis">
+                        <h3><i class="fas fa-robot"></i> AI Analysis & Insights</h3>
+                        <p>{{ ai_analysis }}</p>
+                        
+                        <div class="ai-factors">
+                            {% if prediction == 'Approved' %}
+                                <div class="ai-factor positive">
+                                    <i class="fas fa-chart-line"></i>
+                                    <div class="ai-factor-content">
+                                        <h4>Strong Credit History</h4>
+                                        <p>Your credit score shows reliable payment history</p>
+                                    </div>
+                                </div>
+                                <div class="ai-factor positive">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <div class="ai-factor-content">
+                                        <h4>Income Stability</h4>
+                                        <p>Your income to debt ratio is favorable</p>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="ai-factor negative">
+                                    <i class="fas fa-chart-line"></i>
+                                    <div class="ai-factor-content">
+                                        <h4>Credit History</h4>
+                                        <p>Recent credit history shows potential risk factors</p>
+                                    </div>
+                                </div>
+                                <div class="ai-factor neutral">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <div class="ai-factor-content">
+                                        <h4>Debt Ratio</h4>
+                                        <p>Current debt to income ratio needs improvement</p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="ai-factor neutral">
+                                <i class="fas fa-history"></i>
+                                <div class="ai-factor-content">
+                                    <h4>Loan History</h4>
+                                    <p>Previous loan payment patterns considered</p>
+                                </div>
+                            </div>
+                            <div class="ai-factor positive">
+                                <i class="fas fa-home"></i>
+                                <div class="ai-factor-content">
+                                    <h4>Loan Security</h4>
+                                    <p>Collateral value assessment completed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <a href="{{url_for('home')}}" class="back-button">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
+                    
+                    <div class="model-info">
+                        <i class="fas fa-info-circle"></i> Prediction powered by XGBoost ML model with 83% accuracy
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

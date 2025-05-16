@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lone Approval Predictions - Welcome</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #f4f4f4;
+            --text-color: #333;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .landing-container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            overflow: hidden;
+            min-height: 700px;
+        }
+        .landing-left {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .landing-left h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .landing-left p {
+            font-size: 1rem;
+            margin-bottom: 30px;
+            max-width: 400px;
+        }
+        .feature-list {
+            list-style-type: none;
+            margin-bottom: 30px;
+        }
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .feature-list li i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+        .model-accuracy-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .model-accuracy-btn:hover {
+            background-color: #27ae60;
+        }
+        .landing-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px;
+        }
+        .login-form {
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .login-form h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .login-btn:hover {
+            background-color: #2980b9;
+        }
+        .admin-login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .admin-login-btn:hover {
+            background-color: #c0392b;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .register-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .alert {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .alert.error {
+            background-color: #ffdddd;
+            color: #f44336;
+        }
+        .alert.success {
+            background-color: #ddffdd;
+            color: #4CAF50;
+        }
+        @media (max-width: 768px) {
+            .landing-container {
+                flex-direction: column;
+                max-width: 95%;
+            }
+            .landing-left, .landing-right {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-container">
+        <div class="landing-left">
+            <h1>Lone Approval Predictions</h1>
+            <p>Advanced predictive analytics for loan approvals, helping financial institutions make smarter decisions.</p>
+            
+            <ul class="feature-list">
+                <li>
+                    <i class="fas fa-chart-line"></i>
+                    Accurate Risk Assessment
+                </li>
+                <li>
+                    <i class="fas fa-shield-alt"></i>
+                    Secure Data Processing
+                </li>
+                <li>
+                    <i class="fas fa-database"></i>
+                    Machine Learning Algorithms
+                </li>
+                <li>
+                    <i class="fas fa-clock"></i>
+                    Real-time Predictions
+                </li>
+            </ul>
+
+            <!-- New Button Added -->
+            <button class="model-accuracy-btn" onclick="window.location.href='{{ url_for('model') }}'">
+                Model Accuracy
+            </button>
+        </div>
+        <div class="landing-right">
+            <form class="login-form" method="POST" action="{{ url_for('login') }}">
+                <h2>Welcome Back</h2>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    Login
+                </button>
+                <button type="button" class="admin-login-btn" onclick="window.location.href='{{ url_for('admin_login') }}'">
+                    Admin Login
+                </button>
+                <div class="register-link">
+                    Don't have an account? 
+                    <a href="{{ url_for('register') }}">Register here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

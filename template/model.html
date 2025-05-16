@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Prediction Model Accuracy</title>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .chart-container {
+            width: 80%;
+            margin: auto;
+        }
+        canvas {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .accuracy-table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        .accuracy-table th, .accuracy-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .accuracy-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Loan Prediction Model Accuracy Comparison</h1>
+
+    <!-- Bar Chart -->
+    <div class="chart-container">
+        <canvas id="accuracyChart"></canvas>
+    </div>
+
+    <!-- Accuracy Table -->
+    <table class="accuracy-table">
+        <thead>
+            <tr>
+                <th>Model</th>
+                <th>Accuracy</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>XGBoost</td>
+                <td>0.8500</td>
+            </tr>
+            <tr>
+                <td>Random Forest</td>
+                <td>0.8200</td>
+            </tr>
+            <tr>
+                <td>SVM</td>
+                <td>0.7800</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // Data for the bar chart (replace with actual accuracy values from your Python script)
+        const accuracies = {
+            labels: ['XGBoost', 'Random Forest', 'SVM'],
+            data: [0.85, 0.82, 0.78], // Example accuracy values
+            backgroundColor: ['blue', 'green', 'red']
+        };
+
+        // Create the bar chart
+        const ctx = document.getElementById('accuracyChart').getContext('2d');
+        const accuracyChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: accuracies.labels,
+                datasets: [{
+                    label: 'Model Accuracy',
+                    data: accuracies.data,
+                    backgroundColor: accuracies.backgroundColor,
+                    borderColor: accuracies.backgroundColor,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 1,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toFixed(2); // Show two decimal places
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false // Hide the legend
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `Accuracy: ${context.parsed.y.toFixed(2)}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f7fe;
+            color: #1e293b;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a6cf7;
+            margin: 2rem 0;
+        }
+
+        /* Container */
+        .container {
+            padding: 2rem;
+        }
+
+        /* User Information */
+        .all-users {
+            margin-top: 3rem;
+        }
+
+        .user-info {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(74, 108, 247, 0.1);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .user-info h3 {
+            color: #4a6cf7;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .user-info p {
+            color: #64748b;
+            margin: 0.5rem 0;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid #e1e7f0;
+        }
+
+        th {
+            background: #4a6cf7;
+            color: white;
+        }
+
+        td {
+            background: #f9fafb;
+        }
+
+        tr:hover {
+            background-color: #e6eaf4;
+        }
+
+        /* Logout Button */
+        .logout {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #4a6cf7 0%, #22d3ee 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(74, 108, 247, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(74, 108, 247, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .user-info {
+                padding: 1rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to your Dashboard</h1>
+
+        <!-- All Users' Data and Predictions -->
+        <div class="all-users">
+            <h2>All Users Information</h2>
+            {% if users_with_predictions %}
+                {% for user_data in users_with_predictions %}
+                    <div class="user-info">
+                        <h3>User: {{ user_data['user'][1] }}</h3>
+                        <p><strong>Mobile:</strong> {{ user_data['user'][2] }}</p>
+                        <p><strong>Date of Birth:</strong> {{ user_data['user'][3] }}</p>
+                        <p><strong>Location:</strong> {{ user_data['user'][4] }}</p>
+
+                        <h4>Predictions</h4>
+                        {% if user_data['predictions'] %}
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                        <th>Education</th>
+                                        <th>Self-Employed</th>
+                                        <th>Marital Status</th>
+                                        <th>Dependents</th>
+                                        <th>Applicant Income</th>
+                                        <th>Coapplicant Income</th>
+                                        <th>Loan Amount</th>
+                                        <th>Loan Term</th>
+                                        <th>Credit History</th>
+                                        <th>Property Area</th>
+                                        <th>Prediction</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for prediction in user_data['predictions'] %}
+                                        <tr>
+                                            <td>{{ prediction[0] }}</td>
+                                            <td>{{ prediction[1] }}</td>
+                                            <td>{{ prediction[2] }}</td>
+                                            <td>{{ prediction[3] }}</td>
+                                            <td>{{ prediction[4] }}</td>
+                                            <td>{{ prediction[5] }}</td>
+                                            <td>{{ prediction[6] }}</td>
+                                            <td>{{ prediction[7] }}</td>
+                                            <td>{{ prediction[8] }}</td>
+                                            <td>{{ prediction[9] }}</td>
+                                            <td>{{ prediction[10] }}</td>
+                                            <td>{{ prediction[11] }}</td>
+                                            <td>{{ prediction[12] }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No predictions available for this user.</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No users found.</p>
+            {% endif %}
+        </div>
+
+        <!-- Logout Button -->
+        <div class="logout">
+            <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

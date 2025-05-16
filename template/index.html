@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoanPro - Smart Financing Solution</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../static/images/logo-icon.png">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Advanced Design System */
+        :root {
+            /* Color Palette */
+            --color-primary: #4a6cf7;
+            --color-secondary: #22d3ee;
+            --color-background: #f4f7fe;
+            --color-text-primary: #1e293b;
+            --color-text-secondary: #64748b;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #4a6cf7 0%, #22d3ee 100%);
+            --gradient-secondary: linear-gradient(135deg, #22d3ee 0%, #4ade80 100%);
+            
+            /* Shadows */
+            --shadow-subtle: 0 10px 25px rgba(74, 108, 247, 0.1);
+            --shadow-medium: 0 15px 35px rgba(74, 108, 247, 0.15);
+        }
+
+        /* Global Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Reset and Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--color-background);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Container Styles */
+        .loan-application-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            background: linear-gradient(45deg, #f4f7fe 0%, #e6eaf4 100%);
+            perspective: 1000px;
+        }
+
+        /* Advanced Card Design */
+        .loan-application-card {
+            width: 100%;
+            max-width: 1100px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: var(--shadow-medium);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .loan-application-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg, 
+                transparent, 
+                rgba(74, 108, 247, 0.05), 
+                transparent
+            );
+            transform: rotate(-45deg);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Header Section */
+        .loan-header {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(to right, #f4f7fe, #e6eaf4);
+            position: relative;
+        }
+
+        .loan-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .loan-header h2 {
+            font-size: 2.75rem;
+            color: var(--color-primary);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            animation: pulse 3s infinite;
+        }
+
+        .loan-header p {
+            color: var(--color-text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* Form Styling */
+        .loan-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            padding: 2.5rem;
+            background: white;
+        }
+
+        .form-group {
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .form-group:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .form-group:nth-child(odd) {
+            animation-delay: 0.1s;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: var(--color-text-secondary);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid rgba(100, 116, 139, 0.2);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: #f9fafb;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-control:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2), 
+                        0 4px 6px rgba(74, 108, 247, 0.1);
+            outline: none;
+        }
+
+        /* Submit Section */
+        .submit-section {
+            grid-column: 1 / -1;
+            margin-top: 1.5rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.25rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(74, 108, 247, 0.2);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(74, 108, 247, 0.3);
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba( 74, 108, 247, 0.2), transparent);
+            transition: left 0.4s ease;
+            z-index: 0;
+        }
+
+        .submit-btn:hover::before {
+            left: 0;
+        }
+
+        .submit-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .loan-form {
+                grid-template-columns: 1fr;
+            }
+
+            .loan-application-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Checkbox Styling */
+.checkbox-group {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 1s ease-out;
+}
+
+.checkbox-group input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--color-primary);
+    border-radius: 6px;
+    margin-right: 12px;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.checkbox-group input[type="checkbox"]:checked {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.checkbox-group input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 7px;
+    border: 2px solid white;
+    border-top: none;
+    border-right: none;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.checkbox-group input[type="checkbox"]:checked::before {
+    opacity: 1;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.term-service {
+    color: var(--color-primary);
+    margin-left: 5px;
+    text-decoration: none;
+}
+
+.term-service:hover {
+    text-decoration: underline;
+}
+    </style>
+</head>
+<body>
+    <div class="loan-application-container">
+        <div class="loan-application-card">
+            <div class="loan-header">
+                <h2>LoanPro Financing Solutions</h2>
+                <p>Discover the best financing options tailored just for you. Fill out the form below to check your eligibility!</p>
+            </div>
+            <form action="/prediction" method="POST" class="loan-form">
+                <!-- Personal Information Section -->
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" class="form-control" id="name" name="name" 
+                           placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="birthdate">Date of Birth</label>
+                    <input type="date" class="form-control" id="birthdate" name="birthdate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select class="form-control" id="gender" name="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="1">Male</option>
+                        <option value="0">Female</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="marital_status">Marital Status</label>
+                    <select class="form-control" id="marital_status" name="marital_status" required>
+                        <option value="">Select Marital Status</option>
+                        <option value="0">Single</option>
+                        <option value="1">Married</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="education">Education Level</label>
+                    <select class="form-control" id="education" name="education" required>
+                        <option value="">Select Education Level</option>
+                        <option value="1">Not Graduate</option>
+                        <option value="0">Graduate</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="self_employed">Self Employed</label>
+                    <select class="form-control" id="self_employed" name="self_employed" required>
+                        <option value="">Select Employment Status</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dependents">Number of Dependents</label>
+                    <select class="form-control" id="dependents" name="dependents" required>
+                        <option value="">Select Number of Dependents</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3+</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for ="property_area">Property Area</label>
+                    <select class="form-control" id="property_area" name="property_area" required>
+                        <option value="">Select Property Area</option>
+                        <option value="Urban">Urban</option>
+                        <option value="Semiurban">Semi-Urban</option>
+                        <option value="Rural">Rural</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="applicant_income">Applicant Income (INR)</label>
+                    <input type="number" class="form-control" id="applicant_income" name="applicant_income" 
+                           placeholder="Enter your monthly income" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="coapplicant_income">Co-Applicant Income (INR)</label>
+                    <input type="number" class="form-control" id="coapplicant_income" name="coapplicant_income" 
+                           placeholder="Enter co-applicant's monthly income" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loan_amount">Loan Amount (INR)</label>
+                    <input type="number" class="form-control" id="loan_amount" name="loan_amount" 
+                           placeholder="Enter desired loan amount" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loan_term">Loan Term (Days)</label>
+                    <input type="number" class="form-control" id="loan_term" name="loan_term" 
+                           placeholder="Enter loan term in days" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="credit_history">Credit History</label>
+                    <select class="form-control" id="credit_history" name="credit_history" required>
+                        <option value="">Select Credit History</option>
+                        <option value="1">All Debts Paid</option>
+                        <option value="0">Not Paid</option>
+                    </select>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="agree-term" name="agree-term" required>
+                    <label for="agree-term">I agree to the <a href="#" class="term-service">Terms of Service</a></label>
+                </div>
+
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn"><span>Check Loan Eligibility</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
